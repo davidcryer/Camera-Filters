@@ -11,7 +11,7 @@ include ${OPENCVROOT}/sdk/native/jni/OpenCV.mk
 
 LOCAL_SRC_FILES := native-lib.cpp
 LOCAL_LDLIBS += -llog
-LOCAL_MODULE := MyLib
+LOCAL_MODULE := MyOpenCVLib
 
 
 include $(BUILD_SHARED_LIBRARY)

@@ -6,14 +6,14 @@ import android.support.annotation.NonNull;
 import com.davidc.uiwrapper.UiModel;
 
 public class FilterUiModel implements UiModel<FilterUi> {
-    private String text;
 
-    public FilterUiModel(String text) {
-        this.text = text;
+
+    public FilterUiModel() {
+
     }
 
     private FilterUiModel(final Parcel source) {
-        text = source.readString();
+
     }
 
     @Override
@@ -23,7 +23,7 @@ public class FilterUiModel implements UiModel<FilterUi> {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(text);
+        
     }
 
     public final static Creator<FilterUiModel> CREATOR = new Creator<FilterUiModel>() {
