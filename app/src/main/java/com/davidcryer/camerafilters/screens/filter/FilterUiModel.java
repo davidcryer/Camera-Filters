@@ -4,9 +4,10 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 
 import com.davidc.uiwrapper.UiModel;
+import com.davidcryer.camerafilters.framework.opencv.ImageManipulator;
 
 public class FilterUiModel implements UiModel<FilterUi> {
-
+    private ImageManipulator imageManipulator;
 
     public FilterUiModel() {
 
@@ -23,7 +24,7 @@ public class FilterUiModel implements UiModel<FilterUi> {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        
+
     }
 
     public final static Creator<FilterUiModel> CREATOR = new Creator<FilterUiModel>() {
@@ -41,5 +42,20 @@ public class FilterUiModel implements UiModel<FilterUi> {
     @Override
     public void onto(@NonNull FilterUi ui) {
 
+    }
+
+    ImageManipulator imageManipulator() {
+        return imageManipulator;
+    }
+
+    void imageManipulator(final ImageManipulator imageManipulator) {
+        resetImageManipulator();
+        this.imageManipulator = imageManipulator;
+    }
+
+    private void resetImageManipulator() {
+        if (imageManipulator != null) {
+            imageManipulator.reset();
+        }
     }
 }

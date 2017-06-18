@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.davidc.uiwrapper.UiWrapper;
+import com.davidcryer.camerafilters.framework.opencv.ImageManipulator;
 import com.davidcryer.camerafilters.framework.opencv.OpenCvInitialiser;
 import com.davidcryer.camerafilters.framework.uiwrapper.UiModelFactory;
 
@@ -11,10 +12,6 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.core.Mat;
 
 public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, FilterUiModel> {
-
-    static {
-        System.loadLibrary("MyLib");
-    }
 
     private FilterUiWrapper(@NonNull FilterUiModel uiModel) {
         super(uiModel);
@@ -49,17 +46,17 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
 
             @Override
             public void onCameraViewStarted(int width, int height, FilterUi ui) {
-
+                uiModel().imageManipulator(new ImageManipulator());
             }
 
             @Override
             public void onCameraViewStopped(FilterUi ui) {
-
+                uiModel().imageManipulator(null);
             }
 
             @Override
             public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame, FilterUi ui) {
-                return null;
+                return uiModel().imageManipulator().onCameraFrame(inputFrame);
             }
         };
     }
