@@ -59,7 +59,7 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
 
             @Override
             public void onCameraViewStarted(int width, int height, FilterUi ui) {
-                uiModel().imageManipulator(new ImageManipulator());
+                uiModel().imageManipulator(new ImageManipulator(height, width));
             }
 
             @Override

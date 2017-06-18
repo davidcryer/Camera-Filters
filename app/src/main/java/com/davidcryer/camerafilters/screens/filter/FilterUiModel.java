@@ -55,7 +55,7 @@ public class FilterUiModel implements UiModel<FilterUi> {
 
     private void resetImageManipulator() {
         if (imageManipulator != null) {
-            imageManipulator.reset();
+            imageManipulator.release();
         }
     }
 }
