@@ -22,7 +22,7 @@ public class OpenCvInitialiser {
                 switch (status) {
                     case SUCCESS: {
                         callback.onInitialised();
-                    }return;
+                    } return;
                 }
                 super.onManagerConnected(status);
             }
