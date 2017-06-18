@@ -12,7 +12,7 @@ public class FilterActivity extends SingleContentContainerWithAppBarActivity {
 
     @Override
     protected void setupActionBar(@NonNull ActionBar actionBar) {
-
+        actionBar.hide();
     }
 
     @NonNull
