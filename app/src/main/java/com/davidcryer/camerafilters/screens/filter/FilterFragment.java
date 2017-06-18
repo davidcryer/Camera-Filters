@@ -1,6 +1,6 @@
 package com.davidcryer.camerafilters.screens.filter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,6 +37,11 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
 
     private final FilterUi ui = new FilterUi() {
         @Override
+        public void showPermissionNotGrantedDialog() {
+            //TODO
+        }
+
+        @Override
         public void enableSurface() {
             surfaceView.enableView();
         }
@@ -47,7 +52,7 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
         }
 
         @Override
-        public Context context() {
+        public Activity activity() {
             return getActivity();
         }
     };
@@ -113,5 +118,11 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     public void onDestroy() {
         super.onDestroy();
         if (hasListener()) listener().onDestroy(ui);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (hasListener()) listener().onPermissionsReturned(ui, requestCode, permissions, grantResults);
     }
 }
