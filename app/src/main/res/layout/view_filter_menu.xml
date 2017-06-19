@@ -56,23 +56,13 @@
             android:textColor="@android:color/white" />
 
         <TextView
-            android:id="@+id/start"
+            android:id="@+id/onOffToggle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:background="@drawable/selector_mask_white"
             android:text="@string/filter.menu.start"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:id="@+id/stop"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_mask_white"
-            android:text="@string/filter.menu.stop"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

@@ -4,14 +4,19 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.davidcryer.camerafilters.R;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FilterMenu extends LinearLayout {
     private Listener listener;
+    private boolean isStartCameraFeedState = true;
+    @BindView(R.id.onOffToggle)
+    TextView onOffToggleView;
 
     public FilterMenu(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -19,16 +24,30 @@ public class FilterMenu extends LinearLayout {
         ButterKnife.bind(this);
     }
 
-    @SuppressWarnings("unused")
-    @OnClick(R.id.start)
-    public void onClickStart() {
-        if (listener != null) listener.onClickStart();
+    void listener(final Listener listener) {
+        this.listener = listener;
+    }
+
+    void showStartCameraFeedState() {
+        isStartCameraFeedState = true;
+        onOffToggleView.setText(getContext().getText(R.string.filter_menu_start));
+    }
+
+    void showFilterOptionsState() {
+        isStartCameraFeedState = false;
+        onOffToggleView.setText(getContext().getText(R.string.filter_menu_stop));
     }
 
     @SuppressWarnings("unused")
-    @OnClick(R.id.stop)
-    public void onClickStop() {
-        if (listener != null) listener.onClickStop();
+    @OnClick(R.id.onOffToggle)
+    public void onClickStart() {
+        if (listener != null) {
+            if (isStartCameraFeedState) {
+                listener.onClickStart();
+            } else {
+                listener.onClickStop();
+            }
+        }
     }
 
     @SuppressWarnings("unused")
@@ -53,10 +72,6 @@ public class FilterMenu extends LinearLayout {
     @OnClick(R.id.canny)
     public void onClickCanny() {
         if (listener != null) listener.onClickCanny();
-    }
-
-    void listener(final Listener listener) {
-        this.listener = listener;
     }
 
     interface Listener {
