@@ -3,6 +3,8 @@ package com.davidcryer.camerafilters.framework.opencv;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -17,12 +19,27 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class UiLessJavaCameraView extends JavaCameraView {
-    private Set<SurfaceHolder> origHolders = new HashSet<>();
-    private Set<SurfaceHolder> modHolders = new HashSet<>();
+    private static final float LABEL_TEXT_SIZE = 18.0f;
+    private final static String LABEL_ORIG = "Original";
+    private final static String LABEL_MOD = "Composited (CPU)";
+    private final ImageLabel origLabel;
+    private final ImageLabel modLabel;
+    private final Set<SurfaceHolder> origHolders = new HashSet<>();
+    private final Set<SurfaceHolder> modHolders = new HashSet<>();
     private Bitmap origCachedBitmap;
+
+    static {
+
+    }
 
     public UiLessJavaCameraView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        final Paint labelPaint = new Paint();
+        labelPaint.setColor(Color.BLUE);
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        labelPaint.setTextSize((LABEL_TEXT_SIZE * scale + 0.5f));
+        origLabel = new ImageLabel(LABEL_ORIG, labelPaint);
+        modLabel = new ImageLabel(LABEL_MOD, labelPaint);
     }
 
     public void registerForOriginalFrames(final SurfaceHolder holder) {
@@ -69,24 +86,24 @@ public class UiLessJavaCameraView extends JavaCameraView {
         }
 
         if (bmpValid) {
-            onto(mCacheBitmap, modHolders);
-            onto(origCachedBitmap, origHolders);
+            onto(mCacheBitmap, modLabel, modHolders);
+            onto(origCachedBitmap, origLabel, origHolders);
         }
     }
 
-    private void onto(final Bitmap bitmap, final Set<SurfaceHolder> holders) {
+    private void onto(final Bitmap bitmap, final ImageLabel label, final Set<SurfaceHolder> holders) {
         if (bitmap != null) {
             for (final SurfaceHolder holder : holders) {
                 Canvas canvas = holder.lockCanvas();
                 if (canvas != null) {
-                    onto(bitmap, canvas);
+                    onto(bitmap, label, canvas);
                     holder.unlockCanvasAndPost(canvas);
                 }
             }
         }
     }
 
-    private void onto(final Bitmap bitmap, final Canvas canvas) {
+    private void onto(final Bitmap bitmap, final ImageLabel label, final Canvas canvas) {
         canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
         if (BuildConfig.DEBUG)
             Log.d(getClass().getSimpleName(), "mStretch value: " + mScale);
@@ -105,9 +122,8 @@ public class UiLessJavaCameraView extends JavaCameraView {
                             (canvas.getHeight() - bitmap.getHeight()) / 2 + bitmap.getHeight()), null);
         }
 
-        if (mFpsMeter != null) {
-            mFpsMeter.measure();
-            mFpsMeter.draw(canvas, 20, 30);
+        if (label != null) {
+            label.draw(canvas, 20, 50);
         }
     }
 
