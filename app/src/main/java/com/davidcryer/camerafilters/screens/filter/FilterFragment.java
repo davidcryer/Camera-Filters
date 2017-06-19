@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -12,6 +13,7 @@ import android.view.WindowManager;
 import com.davidc.uiwrapper.UiFragment;
 import com.davidcryer.camerafilters.R;
 import com.davidcryer.camerafilters.framework.activities.OnBackPressedNotifier;
+import com.davidcryer.camerafilters.framework.opencv.UiLessJavaCameraView;
 import com.davidcryer.camerafilters.framework.uiwrapper.UiWrapperRepository;
 
 import org.opencv.android.CameraBridgeViewBase;
@@ -25,9 +27,13 @@ import butterknife.Unbinder;
 public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Listener> {
     private Unbinder unbinder;
     @BindView(R.id.surface)
-    CameraBridgeViewBase surfaceView;
+    UiLessJavaCameraView surfaceView;
     @BindView(R.id.menu)
     FilterMenu menuView;
+    @BindView(R.id.orig)
+    SurfaceView origView;
+    @BindView(R.id.mod)
+    SurfaceView modView;
 
     @Override
     protected FilterUi.Listener bind(@NonNull UiWrapperRepository uiWrapperRepository, @NonNull String instanceId, @Nullable Bundle savedInstanceState) {
@@ -47,11 +53,15 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
 
         @Override
         public void enableSurface() {
+            surfaceView.registerForOriginalFrames(origView.getHolder());
+            surfaceView.registerForModifiedFrames(modView.getHolder());
             surfaceView.enableView();
         }
 
         @Override
         public void disableSurface() {
+            surfaceView.unRegisterForOriginalFrames(origView.getHolder());
+            surfaceView.unRegisterForModifiedFrames(modView.getHolder());
             surfaceView.disableView();
         }
 
