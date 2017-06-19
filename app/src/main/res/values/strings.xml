@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">CameraFilters</string>
+
+    <string name="filter.menu.color.rgba">RGBA</string>
+    <string name="filter.menu.color.gbra">GBRA</string>
+    <string name="filter.menu.color.brga">BRGA</string>
+    <string name="filter.menu.color.grey">Grey</string>
+    <string name="filter.menu.color.canny">Canny</string>
+    <string name="filter.menu.start">Start</string>
+    <string name="filter.menu.stop">Stop</string>
 </resources>
