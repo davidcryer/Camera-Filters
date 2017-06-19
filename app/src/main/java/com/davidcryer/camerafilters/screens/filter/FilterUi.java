@@ -20,9 +20,9 @@ public interface FilterUi extends Ui {
     interface Listener extends Ui.Listener {
         void onResume(FilterUi ui);
         void onPause(FilterUi ui);
+        void onDestroy(FilterUi ui);
         void onPermissionsReturned(FilterUi ui, int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults);
         void onPermissionNotGrantedDialogDismissed(FilterUi ui);
-        void onDestroy(FilterUi ui);
         void onCameraViewStarted(int width, int height, FilterUi ui);
         void onCameraViewStopped(FilterUi ui);
         boolean onBackPressed(FilterUi ui);

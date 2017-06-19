@@ -43,6 +43,11 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
             }
 
             @Override
+            public void onDestroy(FilterUi ui) {
+                ui.disableSurface();
+            }
+
+            @Override
             public void onPermissionsReturned(FilterUi ui, int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
                 processReturnedPermissions(ui, requestCode, grantResults);
             }
@@ -50,11 +55,6 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
             @Override
             public void onPermissionNotGrantedDialogDismissed(FilterUi ui) {
                 getCameraPermission(ui);
-            }
-
-            @Override
-            public void onDestroy(FilterUi ui) {
-                ui.disableSurface();
             }
 
             @Override

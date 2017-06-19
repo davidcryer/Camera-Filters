@@ -135,12 +135,14 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     @Override
     public void onResume() {
         super.onResume();
+        ((OnBackPressedNotifier) getActivity()).register(onBackPressedListener);
         if (hasListener()) listener().onResume(ui);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        ((OnBackPressedNotifier) getActivity()).unRegister(onBackPressedListener);
         if (hasListener()) listener().onPause(ui);
     }
 
@@ -148,18 +150,6 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     public void onDestroy() {
         super.onDestroy();
         if (hasListener()) listener().onDestroy(ui);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        ((OnBackPressedNotifier) getActivity()).register(onBackPressedListener);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        ((OnBackPressedNotifier) getActivity()).unRegister(onBackPressedListener);
     }
 
     private final OnBackPressedNotifier.Listener onBackPressedListener = new OnBackPressedNotifier.Listener() {
