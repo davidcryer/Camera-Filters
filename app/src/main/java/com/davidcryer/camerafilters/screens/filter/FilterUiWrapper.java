@@ -91,7 +91,7 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
             }
 
             @Override
-            public void onClickMenuColorFilter(FilterUi ui, ImageManipulator.ColorProcessing colorProcessing) {
+            public void onClickMenuColorProcessing(FilterUi ui, ImageManipulator.ColorProcessing colorProcessing) {
                 uiModel().imageManipulator().colorProcessing(colorProcessing);
             }
 

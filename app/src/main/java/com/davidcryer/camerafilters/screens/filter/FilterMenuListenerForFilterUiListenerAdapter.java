@@ -21,22 +21,22 @@ abstract class FilterMenuListenerForFilterUiListenerAdapter implements FilterMen
 
     @Override
     public void onClickRgba() {
-        if (hasListener()) listener().onClickMenuColorFilter(ui, ImageManipulator.ColorProcessing.RGBA);
+        if (hasListener()) listener().onClickMenuColorProcessing(ui, ImageManipulator.ColorProcessing.RGBA);
     }
 
     @Override
     public void onClickBrga() {
-        if (hasListener()) listener().onClickMenuColorFilter(ui, ImageManipulator.ColorProcessing.BRGA);
+        if (hasListener()) listener().onClickMenuColorProcessing(ui, ImageManipulator.ColorProcessing.BRGA);
     }
 
     @Override
     public void onClickGrey() {
-        if (hasListener()) listener().onClickMenuColorFilter(ui, ImageManipulator.ColorProcessing.GREY);
+        if (hasListener()) listener().onClickMenuColorProcessing(ui, ImageManipulator.ColorProcessing.GREY);
     }
 
     @Override
     public void onClickCanny() {
-        if (hasListener()) listener().onClickMenuColorFilter(ui, ImageManipulator.ColorProcessing.CANNY);
+        if (hasListener()) listener().onClickMenuColorProcessing(ui, ImageManipulator.ColorProcessing.CANNY);
     }
 
     abstract boolean hasListener();

@@ -29,7 +29,7 @@ public interface FilterUi extends Ui {
         void onClickSurface(FilterUi ui);
         void onClickStart(FilterUi ui);
         void onClickStop(FilterUi ui);
-        void onClickMenuColorFilter(FilterUi ui, ImageManipulator.ColorProcessing colorProcessing);
+        void onClickMenuColorProcessing(FilterUi ui, ImageManipulator.ColorProcessing colorProcessing);
         Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame, FilterUi ui);
     }
 }
