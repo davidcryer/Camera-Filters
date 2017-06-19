@@ -68,6 +68,34 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
             }
 
             @Override
+            public boolean onBackPressed(FilterUi ui) {
+                if (uiModel().isMenuOpen()) {
+                    uiModel().closeMenu(ui);
+                }
+                return false;
+            }
+
+            @Override
+            public void onClickSurface(FilterUi ui) {
+                toggleMenu(ui);
+            }
+
+            @Override
+            public void onClickStart(FilterUi ui) {
+                ui.enableSurface();
+            }
+
+            @Override
+            public void onClickStop(FilterUi ui) {
+                ui.disableSurface();
+            }
+
+            @Override
+            public void onClickMenuColorFilter(FilterUi ui, ImageManipulator.ColorProcessing colorProcessing) {
+                uiModel().imageManipulator().colorProcessing(colorProcessing);
+            }
+
+            @Override
             public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame, FilterUi ui) {
                 return uiModel().imageManipulator().onCameraFrame(inputFrame);
             }
@@ -86,6 +114,13 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
         OpenCvInitialiser.init(ui.activity(), initCallback);
     }
 
+    private final OpenCvInitialiser.Callback initCallback = new OpenCvInitialiser.Callback() {
+        @Override
+        public void onInitialised() {
+            uiModel().openMenu(ui());
+        }
+    };
+
     private void requestCameraPermission(FilterUi ui) {
         PermissionHelper.request(Manifest.permission.CAMERA, PERMISSION_REQUEST_CAMERA, ui.activity());
     }
@@ -102,14 +137,11 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
         }
     }
 
-    private final OpenCvInitialiser.Callback initCallback = new OpenCvInitialiser.Callback() {
-        @Override
-        public void onInitialised() {
-            System.loadLibrary("MyOpenCVLib");
-            final FilterUi ui = ui();
-            if (ui != null) {
-                ui.enableSurface();
-            }
+    private void toggleMenu(FilterUi ui) {
+        if (uiModel().isMenuOpen()) {
+            uiModel().closeMenu(ui);
+        } else {
+            uiModel().openMenu(ui);
         }
-    };
+    }
 }

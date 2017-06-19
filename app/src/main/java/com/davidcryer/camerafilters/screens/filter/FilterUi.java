@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.davidc.uiwrapper.Ui;
+import com.davidcryer.camerafilters.framework.opencv.ImageManipulator;
 
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.core.Mat;
@@ -12,6 +13,8 @@ public interface FilterUi extends Ui {
     void showPermissionNotGrantedDialog();
     void enableSurface();
     void disableSurface();
+    void showMenu();
+    void hideMenu();
     Activity activity();
 
     interface Listener extends Ui.Listener {
@@ -22,6 +25,11 @@ public interface FilterUi extends Ui {
         void onDestroy(FilterUi ui);
         void onCameraViewStarted(int width, int height, FilterUi ui);
         void onCameraViewStopped(FilterUi ui);
+        boolean onBackPressed(FilterUi ui);
+        void onClickSurface(FilterUi ui);
+        void onClickStart(FilterUi ui);
+        void onClickStop(FilterUi ui);
+        void onClickMenuColorFilter(FilterUi ui, ImageManipulator.ColorProcessing colorProcessing);
         Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame, FilterUi ui);
     }
 }

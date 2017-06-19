@@ -8,6 +8,7 @@ import com.davidcryer.camerafilters.framework.opencv.ImageManipulator;
 
 public class FilterUiModel implements UiModel<FilterUi> {
     private ImageManipulator imageManipulator;
+    private boolean isMenuOpen;
 
     public FilterUiModel() {
 
@@ -42,6 +43,24 @@ public class FilterUiModel implements UiModel<FilterUi> {
     @Override
     public void onto(@NonNull FilterUi ui) {
 
+    }
+
+    void openMenu(FilterUi ui) {
+        if (ui != null) {
+            ui.showMenu();
+        }
+        isMenuOpen = true;
+    }
+
+    void closeMenu(FilterUi ui) {
+        if (ui != null) {
+            ui.hideMenu();
+        }
+        isMenuOpen = false;
+    }
+
+    boolean isMenuOpen() {
+        return isMenuOpen;
     }
 
     ImageManipulator imageManipulator() {
