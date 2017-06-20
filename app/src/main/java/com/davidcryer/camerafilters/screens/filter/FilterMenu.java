@@ -132,7 +132,6 @@ public class FilterMenu extends LinearLayout {
                     setUpEffectsContainer();
                 }
             });
-
             hasSetUp = true;
         }
     }
