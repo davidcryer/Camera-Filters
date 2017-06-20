@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.davidc.uiwrapper.UiWrapper;
+import com.davidcryer.camerafilters.framework.opencv.ColorEffect;
+import com.davidcryer.camerafilters.framework.opencv.ImageEffect;
 import com.davidcryer.camerafilters.framework.opencv.ImageManipulator;
 import com.davidcryer.camerafilters.framework.opencv.OpenCvInitialiser;
 import com.davidcryer.camerafilters.framework.uiwrapper.UiModelFactory;
@@ -76,23 +78,31 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
             }
 
             @Override
-            public void onClickSurface(FilterUi ui) {
+            public void onClickRoot(FilterUi ui) {
                 toggleMenu(ui);
             }
 
             @Override
-            public void onClickStart(FilterUi ui) {
-                ui.enableSurface();
+            public void onClickOnOffToggle(FilterUi ui) {
+                uiModel().toggleRunningState(ui);
             }
 
             @Override
-            public void onClickStop(FilterUi ui) {
-                ui.disableSurface();
+            public boolean onClickMenuColorProcessing(FilterUi ui, String effect) {
+                final ColorEffect colorEffect = ColorEffect.effect(effect);
+                if (colorEffect != null) {
+                    uiModel().colorEffect(colorEffect);
+                }
+                return true;
             }
 
             @Override
-            public void onClickMenuColorProcessing(FilterUi ui, ImageManipulator.ColorProcessing colorProcessing) {
-                uiModel().imageManipulator().colorProcessing(colorProcessing);
+            public boolean onClickMenuImageProcessing(FilterUi ui, String effect) {
+                final ImageEffect imageEffect = ImageEffect.effect(effect);
+                if (imageEffect != null) {
+                    uiModel().imageEffect(imageEffect);
+                }
+                return true;
             }
 
             @Override
@@ -117,7 +127,7 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
     private final OpenCvInitialiser.Callback initCallback = new OpenCvInitialiser.Callback() {
         @Override
         public void onInitialised() {
-            uiModel().openMenu(ui());
+
         }
     };
 

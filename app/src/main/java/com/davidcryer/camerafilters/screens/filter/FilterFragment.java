@@ -56,6 +56,7 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
             surfaceView.registerForOriginalFrames(origView.getHolder());
             surfaceView.registerForModifiedFrames(modView.getHolder());
             surfaceView.enableView();
+            menuView.showFilterOptionsState();
         }
 
         @Override
@@ -63,16 +64,17 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
             surfaceView.unRegisterForOriginalFrames(origView.getHolder());
             surfaceView.unRegisterForModifiedFrames(modView.getHolder());
             surfaceView.disableView();
+            menuView.showStartCameraFeedState();
         }
 
         @Override
         public void showMenu() {
-            //TODO animation for showing menu
+            menuView.setVisibility(View.VISIBLE);
         }
 
         @Override
         public void hideMenu() {
-            //TODO animation for hiding menu
+            menuView.setVisibility(View.INVISIBLE);
         }
 
         @Override
@@ -175,8 +177,8 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     }
 
     @SuppressWarnings("unused")
-    @OnClick(R.id.surface)
-    public void onClickSurface() {
-        if (hasListener()) listener().onClickSurface(ui);
+    @OnClick(R.id.fragment_root)
+    public void onClickRoot() {
+        if (hasListener()) listener().onClickRoot(ui);
     }
 }

@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:opencv="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/selector_mask_white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/filter.hint.menu"
+        android:textColor="@android:color/white" />
 
     <com.davidcryer.camerafilters.framework.opencv.UiLessJavaCameraView
         android:id="@+id/surface"
@@ -37,6 +46,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:visibility="visible" /><!-- TODO set vis to gone and animate in/out -->
+        android:visibility="invisible" />
 
 </FrameLayout>

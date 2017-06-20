@@ -1,11 +1,26 @@
 <resources>
     <string name="app_name">CameraFilters</string>
 
-    <string name="filter.menu.color.rgba">RGBA</string>
-    <string name="filter.menu.color.gbra">GBRA</string>
-    <string name="filter.menu.color.brga">BRGA</string>
-    <string name="filter.menu.color.grey">Grey</string>
-    <string name="filter.menu.color.canny">Canny</string>
+    <string name="filter.hint.menu">Click here to open the menu</string>
+
+    <string name="filter.menu.effects">Effects</string>
+    <string name="filter.menu.effects.color">Color: </string>
+    <string name="filter.menu.effects.image">Image: </string>
     <string name="filter.menu.start">Start</string>
     <string name="filter.menu.stop">Stop</string>
+
+    <string-array name="filter_menu_effects_color_array">
+        <item>RGBA</item>
+        <item>BRGA</item>
+        <item>Grey</item>
+        <item>Canny</item>
+    </string-array>
+
+    <string-array name="filter_menu_effects_image_array">
+        <item>None</item>
+        <item>Zoom</item>
+        <item>Pixelise</item>
+        <item>Posterise</item>
+    </string-array>
+
 </resources>

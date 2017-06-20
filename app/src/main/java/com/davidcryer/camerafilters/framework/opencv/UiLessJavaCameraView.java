@@ -14,8 +14,10 @@ import org.opencv.BuildConfig;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class UiLessJavaCameraView extends JavaCameraView {
@@ -63,17 +65,19 @@ public class UiLessJavaCameraView extends JavaCameraView {
         boolean bmpValid = true;
         final Mat unmodified = frame.rgba();
         if (unmodified != null) {
+            final Mat unmodifiedClone = unmodified.clone();
             try {
-                Utils.matToBitmap(unmodified, origCachedBitmap);
+                Utils.matToBitmap(unmodifiedClone, origCachedBitmap);
             } catch(Exception e) {
-                Log.e(getClass().getSimpleName(), "Mat type: " + unmodified);
+                Log.e(getClass().getSimpleName(), "Mat type: " + unmodifiedClone);
                 Log.e(getClass().getSimpleName(), "Bitmap type: " + origCachedBitmap.getWidth() + "*" + origCachedBitmap.getHeight());
                 Log.e(getClass().getSimpleName(), "Utils.matToBitmap() throws an exception: " + e.getMessage());
                 bmpValid = false;
             }
+            unmodifiedClone.release();
         }
 
-        final Mat modified = mListener != null ? mListener.onCameraFrame(frame) : frame.rgba();
+        final Mat modified = mListener != null ? mListener.onCameraFrame(frame) : unmodified;
         if (modified != null) {
             try {
                 Utils.matToBitmap(modified, mCacheBitmap);

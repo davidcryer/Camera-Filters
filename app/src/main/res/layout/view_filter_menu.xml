@@ -1,70 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:clickable="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="@drawable/gradient_transparent_to_black" />
+    android:layout_height="wrap_content">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:id="@+id/effectsContainer"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/black"><!-- TODO use theme for colors and background -->
+        android:layout_margin="16dp"
+        android:background="@drawable/border_white_1px">
 
         <TextView
-            android:id="@+id/rgba"
-            android:layout_width="0dp"
+            android:id="@+id/effects"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_mask_white"
-            android:text="@string/filter.menu.color.rgba"
+            android:text="@string/filter.menu.effects"
             android:textColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/brga"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_mask_white"
-            android:text="@string/filter.menu.color.brga"
-            android:textColor="@android:color/white" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/grey"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_mask_white"
-            android:text="@string/filter.menu.color.grey"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filter.menu.effects.color"
+                android:textColor="@android:color/white" />
 
-        <TextView
-            android:id="@+id/canny"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_mask_white"
-            android:text="@string/filter.menu.color.canny"
-            android:textColor="@android:color/white" />
+            <Spinner
+                android:id="@+id/colors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_vertical"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
-        <TextView
-            android:id="@+id/onOffToggle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_mask_white"
-            android:text="@string/filter.menu.start"
-            android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/filter.menu.effects.image"
+                android:textColor="@android:color/white" />
+
+            <Spinner
+                android:id="@+id/images"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_gravity="center_vertical"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/onOffToggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:background="@drawable/selector_mask_white"
+        android:text="@string/filter.menu.start"
+        android:textColor="@android:color/white" />
 
 </LinearLayout>

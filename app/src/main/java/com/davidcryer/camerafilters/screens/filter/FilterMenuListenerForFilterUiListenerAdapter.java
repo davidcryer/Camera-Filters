@@ -1,7 +1,5 @@
 package com.davidcryer.camerafilters.screens.filter;
 
-import com.davidcryer.camerafilters.framework.opencv.ImageManipulator;
-
 abstract class FilterMenuListenerForFilterUiListenerAdapter implements FilterMenu.Listener {
     private final FilterUi ui;
 
@@ -10,33 +8,18 @@ abstract class FilterMenuListenerForFilterUiListenerAdapter implements FilterMen
     }
 
     @Override
-    public void onClickStart() {
-        if (hasListener()) listener().onClickStart(ui);
+    public boolean onSelectColorEffect(String effect) {
+        return hasListener() && listener().onClickMenuColorProcessing(ui, effect);
     }
 
     @Override
-    public void onClickStop() {
-        if (hasListener()) listener().onClickStop(ui);
+    public boolean onSelectImageEffect(String effect) {
+        return hasListener() && listener().onClickMenuImageProcessing(ui, effect);
     }
 
     @Override
-    public void onClickRgba() {
-        if (hasListener()) listener().onClickMenuColorProcessing(ui, ImageManipulator.ColorProcessing.RGBA);
-    }
-
-    @Override
-    public void onClickBrga() {
-        if (hasListener()) listener().onClickMenuColorProcessing(ui, ImageManipulator.ColorProcessing.BRGA);
-    }
-
-    @Override
-    public void onClickGrey() {
-        if (hasListener()) listener().onClickMenuColorProcessing(ui, ImageManipulator.ColorProcessing.GREY);
-    }
-
-    @Override
-    public void onClickCanny() {
-        if (hasListener()) listener().onClickMenuColorProcessing(ui, ImageManipulator.ColorProcessing.CANNY);
+    public void onClickOnOffToggle() {
+        if (hasListener()) listener().onClickOnOffToggle(ui);
     }
 
     abstract boolean hasListener();
