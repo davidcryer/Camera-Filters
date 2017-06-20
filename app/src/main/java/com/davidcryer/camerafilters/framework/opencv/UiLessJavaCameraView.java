@@ -14,10 +14,8 @@ import org.opencv.BuildConfig;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class UiLessJavaCameraView extends JavaCameraView {
@@ -29,10 +27,6 @@ public class UiLessJavaCameraView extends JavaCameraView {
     private final Set<SurfaceHolder> origHolders = new HashSet<>();
     private final Set<SurfaceHolder> modHolders = new HashSet<>();
     private Bitmap origCachedBitmap;
-
-    static {
-
-    }
 
     public UiLessJavaCameraView(Context context, AttributeSet attrs) {
         super(context, attrs);
