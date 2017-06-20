@@ -67,9 +67,13 @@ public class ImageManipulator {
             case ZOOM: {
                 final int r = dest.rows();
                 final int c = dest.cols();
-                Mat zoomCorner = dest.submat(2 * r / 5, 3 * r / 5, 2 * c / 5, 3 * c / 5);
-                Imgproc.resize(dest, zoomCorner, zoomCorner.size());
+                final Mat zoomCorner = dest.submat(0, r, 0, c);
+                final Mat zoomWindow = dest.submat(2 * r / 5, 3 * r / 5, 2 * c / 5, 3 * c / 5);
+                final Mat zoomWindowClone = zoomWindow.clone();
+                Imgproc.resize(zoomWindowClone, zoomCorner, zoomCorner.size());
                 zoomCorner.release();
+                zoomWindow.release();
+                zoomWindowClone.release();
             } break;
             case PIXELISE: {
                 Imgproc.resize(dest, intermediate, new Size(), 0.1, 0.1, Imgproc.INTER_NEAREST);
