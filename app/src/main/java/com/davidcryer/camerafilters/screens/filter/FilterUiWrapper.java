@@ -127,7 +127,7 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
     private final OpenCvInitialiser.Callback initCallback = new OpenCvInitialiser.Callback() {
         @Override
         public void onInitialised() {
-
+            //TODO ideally block user interaction until opencv initialised, but this is a fast process
         }
     };
 
