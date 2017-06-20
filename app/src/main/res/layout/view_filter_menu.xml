@@ -40,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_gravity="center_vertical"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
         </LinearLayout>
@@ -61,6 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_gravity="center_vertical"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
         </LinearLayout>

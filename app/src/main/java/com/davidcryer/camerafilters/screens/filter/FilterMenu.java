@@ -29,6 +29,8 @@ public class FilterMenu extends LinearLayout {
     Spinner imageSpinner;
     @BindView(R.id.onOffToggle)
     Button onOffToggleView;
+    private int selectedColorIndex;
+    private int selectedImageIndex;
 
     public FilterMenu(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -51,12 +53,13 @@ public class FilterMenu extends LinearLayout {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (listener != null) {
                     final String effect = adapterView.getItemAtPosition(i).toString();
-                    if (!listener.onSelectColorEffect(effect)) {
-                        colorSpinner.setSelection(i, false);
-                    } else {
+                    if (listener.onSelectColorEffect(effect)) {
                         ((TextView) colorSpinner.getSelectedView()).setTextColor(Color.WHITE);
+                        selectedColorIndex = i;
+                        return;
                     }
                 }
+                colorSpinner.setSelection(selectedColorIndex, false);
             }
 
             @Override
@@ -75,12 +78,13 @@ public class FilterMenu extends LinearLayout {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (listener != null) {
                     final String effect = adapterView.getItemAtPosition(i).toString();
-                    if (!listener.onSelectImageEffect(effect)) {
-                        imageSpinner.setSelection(i, false);
-                    } else {
+                    if (listener.onSelectImageEffect(effect)) {
                         ((TextView) imageSpinner.getSelectedView()).setTextColor(Color.WHITE);
+                        selectedImageIndex = i;
+                        return;
                     }
                 }
+                imageSpinner.setSelection(selectedImageIndex, false);
             }
 
             @Override
