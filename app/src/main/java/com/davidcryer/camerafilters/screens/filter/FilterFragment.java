@@ -10,12 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 import com.davidc.uiwrapper.UiFragment;
 import com.davidcryer.camerafilters.R;
 import com.davidcryer.camerafilters.framework.activities.OnBackPressedNotifier;
 import com.davidcryer.camerafilters.framework.opencv.UiLessJavaCameraView;
 import com.davidcryer.camerafilters.framework.uiwrapper.UiWrapperRepository;
+import com.davidcryer.camerafilters.helpers.AnimationHelper;
+import com.davidcryer.camerafilters.helpers.ViewTreeObserverHelper;
 
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.core.Mat;
@@ -35,6 +39,7 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     SurfaceView origView;
     @BindView(R.id.mod)
     SurfaceView modView;
+    View root;
 
     @Override
     protected FilterUi.Listener bind(@NonNull UiWrapperRepository uiWrapperRepository, @NonNull String instanceId, @Nullable Bundle savedInstanceState) {
@@ -70,12 +75,13 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
 
         @Override
         public void showMenu() {
-            menuView.setVisibility(View.VISIBLE);
+            menuView.setUpIfAppropriate();
+            doMenuAnimationIn();
         }
 
         @Override
         public void hideMenu() {
-            menuView.setVisibility(View.INVISIBLE);
+            AnimationHelper.y(menuView, menuView.getY(), root.getHeight(), 400, new AccelerateInterpolator(), null);
         }
 
         @Override
@@ -83,6 +89,25 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
             return getActivity();
         }
     };
+
+    private void doMenuAnimationIn() {
+        if (menuView.getHeight() == 0) {
+            menuView.setVisibility(View.VISIBLE);
+            ViewTreeObserverHelper.listenForGlobalLayout(menuView, new ViewTreeObserverHelper.OnGlobalLayoutListener() {
+                @Override
+                public void onLayout() {
+                    menuView.setY(root.getHeight());
+                    animateInMenu();
+                }
+            });
+        } else {
+            animateInMenu();
+        }
+    }
+
+    private void animateInMenu() {
+        AnimationHelper.y(menuView, menuView.getY(), root.getHeight() - menuView.getHeight(), 400, new DecelerateInterpolator(), null);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,10 +118,10 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_filter, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        root = inflater.inflate(R.layout.fragment_filter, container, false);
+        unbinder = ButterKnife.bind(this, root);
         setCameraViewSize();
-        return view;
+        return root;
     }
 
     private void setCameraViewSize() {
