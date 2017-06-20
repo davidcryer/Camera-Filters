@@ -12,27 +12,32 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp">
+        android:layout_gravity="center_vertical">
 
         <TextView
             android:id="@+id/effects"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_gravity="center_vertical"
             android:text="@string/filter.menu.effects"
+            android:textSize="15sp"
+            android:textStyle="bold"
             android:textColor="@android:color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="@string/filter.menu.effects.color"
+            android:textSize="15sp"
             android:textColor="@android:color/white" />
 
         <Spinner
             android:id="@+id/colors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:layout_gravity="center_vertical"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
@@ -40,14 +45,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="center_vertical"
             android:text="@string/filter.menu.effects.image"
+            android:textSize="15sp"
             android:textColor="@android:color/white" />
 
         <Spinner
             android:id="@+id/images"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:layout_gravity="center_vertical"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
@@ -63,7 +71,7 @@
         android:id="@+id/onOffToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|end"
+        android:layout_gravity="center_vertical"
         android:background="@drawable/selector_mask_white"
         android:text="@string/filter.menu.start"
         android:textColor="@android:color/white" />
