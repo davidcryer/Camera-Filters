@@ -73,6 +73,7 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
             public boolean onBackPressed(FilterUi ui) {
                 if (uiModel().isMenuOpen()) {
                     uiModel().closeMenu(ui);
+                    return true;
                 }
                 return false;
             }
