@@ -1,8 +1,10 @@
 package com.davidcryer.camerafilters.framework.activities;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.view.WindowManager;
 
 import com.davidc.uiwrapper.SingleContentContainerWithAppBarActivity;
 import com.davidcryer.camerafilters.screens.filter.FilterFragment;
@@ -16,6 +18,12 @@ import java.util.Set;
 
 public class FilterActivity extends SingleContentContainerWithAppBarActivity implements OnBackPressedNotifier {
     private final LinkedList<Listener> onBackPressedListeners = new LinkedList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     protected void setupActionBar(@NonNull ActionBar actionBar) {
