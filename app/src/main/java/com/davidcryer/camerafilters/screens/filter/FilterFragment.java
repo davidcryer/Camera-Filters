@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 
 import com.davidc.uiwrapper.UiFragment;
@@ -94,7 +95,19 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_filter, container, false);
         unbinder = ButterKnife.bind(this, view);
+        setCameraViewSize();
         return view;
+    }
+
+    private void setCameraViewSize() {
+        origView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                origView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                surfaceView.getLayoutParams().height = origView.getHeight();
+                surfaceView.getLayoutParams().width = origView.getWidth();
+            }
+        });
     }
 
     @Override
