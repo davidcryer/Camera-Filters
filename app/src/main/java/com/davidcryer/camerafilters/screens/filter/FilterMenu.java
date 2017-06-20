@@ -1,6 +1,7 @@
 package com.davidcryer.camerafilters.screens.filter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -52,6 +53,8 @@ public class FilterMenu extends LinearLayout {
                     final String effect = adapterView.getItemAtPosition(i).toString();
                     if (!listener.onSelectColorEffect(effect)) {
                         colorSpinner.setSelection(i, false);
+                    } else {
+                        ((TextView) colorSpinner.getSelectedView()).setTextColor(Color.WHITE);
                     }
                 }
             }
@@ -74,6 +77,8 @@ public class FilterMenu extends LinearLayout {
                     final String effect = adapterView.getItemAtPosition(i).toString();
                     if (!listener.onSelectImageEffect(effect)) {
                         imageSpinner.setSelection(i, false);
+                    } else {
+                        ((TextView) imageSpinner.getSelectedView()).setTextColor(Color.WHITE);
                     }
                 }
             }
