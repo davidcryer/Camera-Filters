@@ -78,7 +78,7 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
             }
 
             @Override
-            public void onClickRoot(FilterUi ui) {
+            public void onClickMenuToggle(FilterUi ui) {
                 toggleMenu(ui);
             }
 

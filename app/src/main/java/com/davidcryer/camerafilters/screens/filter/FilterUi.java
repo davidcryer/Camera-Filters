@@ -25,7 +25,7 @@ public interface FilterUi extends Ui {
         void onCameraViewStarted(int width, int height, FilterUi ui);
         void onCameraViewStopped(FilterUi ui);
         boolean onBackPressed(FilterUi ui);
-        void onClickRoot(FilterUi ui);
+        void onClickMenuToggle(FilterUi ui);
         void onClickOnOffToggle(FilterUi ui);
         boolean onClickMenuColorProcessing(FilterUi ui, String effect);
         boolean onClickMenuImageProcessing(FilterUi ui, String effect);

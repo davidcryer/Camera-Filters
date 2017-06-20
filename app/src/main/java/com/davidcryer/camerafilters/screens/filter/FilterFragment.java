@@ -177,8 +177,8 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     }
 
     @SuppressWarnings("unused")
-    @OnClick(R.id.fragment_root)
-    public void onClickRoot() {
-        if (hasListener()) listener().onClickRoot(ui);
+    @OnClick(R.id.menu_toggle)
+    public void onClickMenuToggle() {
+        if (hasListener()) listener().onClickMenuToggle(ui);
     }
 }
