@@ -95,11 +95,13 @@ public class FilterMenu extends LinearLayout {
     }
 
     void showStartCameraFeedState() {
+        isStartCameraFeedState = true;
         onOffToggleView.setText(getContext().getText(R.string.filter_menu_start));
         effectsContainer.setVisibility(INVISIBLE);
     }
 
     void showFilterOptionsState() {
+        isStartCameraFeedState = false;
         onOffToggleView.setText(getContext().getText(R.string.filter_menu_stop));
         effectsContainer.setVisibility(VISIBLE);
     }
