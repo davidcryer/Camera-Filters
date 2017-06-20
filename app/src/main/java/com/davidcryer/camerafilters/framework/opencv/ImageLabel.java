@@ -3,17 +3,16 @@ package com.davidcryer.camerafilters.framework.opencv;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-public class ImageLabel {
-    private String text;
-    Paint paint;
+class ImageLabel {
+    private final String text;
+    private final Paint paint;
 
-    public ImageLabel(String text, Paint paint) {
+    ImageLabel(String text, Paint paint) {
         this.text = text;
         this.paint = paint;
     }
 
-    public void draw(Canvas canvas, float offsetx, float offsety) {
+    void draw(Canvas canvas, float offsetx, float offsety) {
         canvas.drawText(text, offsetx, offsety, paint);
     }
-
 }

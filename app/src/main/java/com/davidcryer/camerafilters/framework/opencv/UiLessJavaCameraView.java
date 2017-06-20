@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+import com.davidcryer.camerafilters.helpers.MetricHelper;
+
 import org.opencv.BuildConfig;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.Utils;
@@ -19,11 +21,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class UiLessJavaCameraView extends JavaCameraView {
-    private static final float LABEL_TEXT_SIZE = 18.0f;
+    private static final float LABEL_TEXT_SIZE_SP = 18.0f;
+    private static final float LABEL_X_DP = 24.0f;
+    private static final float LABEL_Y_DP = 32.0f;
     private final static String LABEL_ORIG = "Original";
     private final static String LABEL_MOD = "Composited (CPU)";
     private final ImageLabel origLabel;
     private final ImageLabel modLabel;
+    private final float labelX;
+    private final float labelY;
     private final Set<SurfaceHolder> origHolders = new HashSet<>();
     private final Set<SurfaceHolder> modHolders = new HashSet<>();
     private Bitmap origCachedBitmap;
@@ -31,11 +37,13 @@ public class UiLessJavaCameraView extends JavaCameraView {
     public UiLessJavaCameraView(Context context, AttributeSet attrs) {
         super(context, attrs);
         final Paint labelPaint = new Paint();
-        labelPaint.setColor(Color.BLUE);
+        labelPaint.setColor(Color.WHITE);
         final float scale = getContext().getResources().getDisplayMetrics().density;
-        labelPaint.setTextSize((LABEL_TEXT_SIZE * scale + 0.5f));
+        labelPaint.setTextSize(MetricHelper.toPix(LABEL_TEXT_SIZE_SP, scale));
         origLabel = new ImageLabel(LABEL_ORIG, labelPaint);
         modLabel = new ImageLabel(LABEL_MOD, labelPaint);
+        labelX = MetricHelper.toPix(LABEL_X_DP, scale);
+        labelY = MetricHelper.toPix(LABEL_Y_DP, scale);
     }
 
     public void registerForOriginalFrames(final SurfaceHolder holder) {
@@ -121,7 +129,7 @@ public class UiLessJavaCameraView extends JavaCameraView {
         }
 
         if (label != null) {
-            label.draw(canvas, 20, 50);
+            label.draw(canvas, labelX, labelY);
         }
     }
 
