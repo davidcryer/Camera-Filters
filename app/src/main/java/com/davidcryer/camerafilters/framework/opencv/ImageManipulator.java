@@ -4,8 +4,10 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 public class ImageManipulator {
@@ -44,25 +46,33 @@ public class ImageManipulator {
     }
 
     private void processColors(final CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
+        processColors(inputFrame.rgba(), inputFrame.gray());
+    }
+
+    private void processColors(final Mat rgba, final Mat grey) {
         switch (colorProcessing) {
             default:
             case RGBA: {
-                dest = inputFrame.rgba();
+                dest = rgba;
             } break;
             case BRGA: {
-                Imgproc.cvtColor(inputFrame.rgba(), dest, Imgproc.COLOR_RGBA2BGRA, 4);
+                Imgproc.cvtColor(rgba, dest, Imgproc.COLOR_RGBA2BGRA, 4);
             } break;
             case GREY: {
-                Imgproc.cvtColor(inputFrame.gray(), dest, Imgproc.COLOR_GRAY2RGBA, 4);//TODO what is the last variable?
+                Imgproc.cvtColor(grey, dest, Imgproc.COLOR_GRAY2RGBA, 4);//TODO what is the last variable?
             } break;
             case CANNY: {
-                Imgproc.Canny(inputFrame.gray(), intermediate, 80, 75);//TODO what are these integers?
+                Imgproc.Canny(grey, intermediate, 80, 75);//TODO what are these integers?
                 Imgproc.cvtColor(intermediate, dest, Imgproc.COLOR_GRAY2RGBA, 4);//TODO what is the last variable?
             } break;
         }
     }
 
     private void processImage() {
+        processImage(dest, intermediate);
+    }
+
+    private void processImage(final Mat dest, final Mat intermediate) {
         switch (imageProcessing) {
             case ZOOM: {
                 final int r = dest.rows();
@@ -87,6 +97,21 @@ public class ImageManipulator {
             } break;
         }
     }
+
+    public byte[] process(final byte[] photo) {
+        final Mat pic = Imgcodecs.imdecode(new MatOfByte(photo), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+        final Mat grey = pic.clone();
+        Imgproc.cvtColor(pic, grey, Imgproc.COLOR_RGB2GRAY);//TODO check type - may need BGR2GRAY
+        processColors(pic, grey);
+        grey.release();
+        final Mat inter = pic.clone();
+        processImage(pic, inter);
+        inter.release();
+        final byte[] bytes = new byte[photo.length];
+        pic.get(0, 0, bytes);
+        return bytes;
+    }
+
 
     public void release() {
         intermediate.release();

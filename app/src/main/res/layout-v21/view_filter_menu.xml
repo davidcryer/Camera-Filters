@@ -65,6 +65,16 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
+    <ImageView
+        android:id="@+id/take_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_gravity="center_vertical"
+        android:visibility="gone"
+        android:src="@drawable/ic_photo_camera_white_24dp" />
+
     <Button
         android:id="@+id/onOffToggle"
         android:layout_width="wrap_content"

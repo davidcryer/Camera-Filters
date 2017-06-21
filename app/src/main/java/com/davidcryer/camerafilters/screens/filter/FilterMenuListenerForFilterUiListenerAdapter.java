@@ -22,6 +22,11 @@ abstract class FilterMenuListenerForFilterUiListenerAdapter implements FilterMen
         if (hasListener()) listener().onClickOnOffToggle(ui);
     }
 
+    @Override
+    public void onClickTakePhoto() {
+        if (hasListener()) listener().onClickTakePhotograph(ui);
+    }
+
     abstract boolean hasListener();
 
     abstract FilterUi.Listener listener();

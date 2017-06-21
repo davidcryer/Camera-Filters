@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.davidcryer.camerafilters.R;
 import com.davidcryer.camerafilters.helpers.AnimationHelper;
+import com.davidcryer.camerafilters.helpers.SimpleAnimationCallback;
 import com.davidcryer.camerafilters.helpers.ViewTreeObserverHelper;
 
 import butterknife.BindView;
@@ -33,6 +34,8 @@ public class FilterMenu extends LinearLayout {
     Spinner imageSpinner;
     @BindView(R.id.onOffToggle)
     Button onOffToggleView;
+    @BindView(R.id.take_photo)
+    View takePhotoView;
     private int selectedColorIndex;
     private int selectedImageIndex;
     private boolean hasSetUp = false;
@@ -113,6 +116,12 @@ public class FilterMenu extends LinearLayout {
     void showStartCameraFeedState() {
         isStartCameraFeedState = true;
         onOffToggleView.setText(getContext().getText(R.string.filter_menu_start));
+        AnimationHelper.fade(takePhotoView, takePhotoView.getAlpha(), 0f, 300L, new SimpleAnimationCallback() {
+            @Override
+            public void onStart() {
+                takePhotoView.setOnClickListener(null);
+            }
+        });
         AnimationHelper.x(effectsContainer, effectsContainer.getX(), -effectsContainer.getWidth(), 400, new AccelerateInterpolator(), null);
     }
 
@@ -121,7 +130,36 @@ public class FilterMenu extends LinearLayout {
         colorSelectedTextWhite(colorSpinner);
         colorSelectedTextWhite(imageSpinner);
         onOffToggleView.setText(getContext().getText(R.string.filter_menu_stop));
+        doTakePhotoIconAnimateIn();
         AnimationHelper.x(effectsContainer, effectsContainer.getX(), 0, 400, new DecelerateInterpolator(), null);
+    }
+
+    private void doTakePhotoIconAnimateIn() {
+        if (takePhotoView.getWidth() == 0) {
+            takePhotoView.setVisibility(VISIBLE);
+            ViewTreeObserverHelper.listenForGlobalLayout(takePhotoView, new ViewTreeObserverHelper.OnGlobalLayoutListener() {
+                @Override
+                public void onLayout() {
+                    animateInTakePhotoIcon();
+                }
+            });
+        } else {
+            animateInTakePhotoIcon();
+        }
+    }
+
+    private void animateInTakePhotoIcon() {
+        AnimationHelper.fade(takePhotoView, takePhotoView.getAlpha(), 1f, 300L, new SimpleAnimationCallback() {
+            @Override
+            public void onFinish() {
+                takePhotoView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onClickTakePhoto();
+                    }
+                });
+            }
+        });
     }
 
     void setUpIfAppropriate() {
@@ -144,6 +182,10 @@ public class FilterMenu extends LinearLayout {
         }
     }
 
+    private void onClickTakePhoto() {
+        if (listener != null) listener.onClickTakePhoto();
+    }
+
     @SuppressWarnings("unused")
     @OnClick(R.id.onOffToggle)
     public void onClickOnOffToggle() {
@@ -154,5 +196,6 @@ public class FilterMenu extends LinearLayout {
         boolean onSelectColorEffect(String effect);
         boolean onSelectImageEffect(String effect);
         void onClickOnOffToggle();
+        void onClickTakePhoto();
     }
 }

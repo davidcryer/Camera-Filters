@@ -1,6 +1,7 @@
 package com.davidcryer.camerafilters.helpers;
 
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 public class AnimationHelper {
@@ -21,6 +22,16 @@ public class AnimationHelper {
                 .y(fin)
                 .setDuration(duration(st, fin, v.getY(), maxDur))
                 .setInterpolator(interpolator)
+                .withEndAction(SimpleAnimationCallback.endAction(callback))
+                .start();
+    }
+
+    public static void fade(final View v, final float st, final float fin, final long maxDur, final SimpleAnimationCallback callback) {
+        SimpleAnimationCallback.onStart(callback);
+        v.animate()
+                .alpha(fin)
+                .setDuration(duration(st, fin, v.getAlpha(), maxDur))
+                .setInterpolator(new AccelerateDecelerateInterpolator())
                 .withEndAction(SimpleAnimationCallback.endAction(callback))
                 .start();
     }

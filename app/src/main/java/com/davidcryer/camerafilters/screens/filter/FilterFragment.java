@@ -85,6 +85,16 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
         }
 
         @Override
+        public void takePhotograph() {
+            surfaceView.takePicture(new UiLessJavaCameraView.PictureCallback() {
+                @Override
+                public void onPictureTaken(byte[] bytes) {
+                    if (hasListener()) listener().onPictureTaken(ui, bytes);
+                }
+            });
+        }
+
+        @Override
         public Activity activity() {
             return getActivity();
         }

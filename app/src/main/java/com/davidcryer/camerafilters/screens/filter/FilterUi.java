@@ -14,6 +14,7 @@ public interface FilterUi extends Ui {
     void disableSurface();
     void showMenu();
     void hideMenu();
+    void takePhotograph();
     Activity activity();
 
     interface Listener extends Ui.Listener {
@@ -27,6 +28,8 @@ public interface FilterUi extends Ui {
         boolean onBackPressed(FilterUi ui);
         void onClickMenuToggle(FilterUi ui);
         void onClickOnOffToggle(FilterUi ui);
+        void onClickTakePhotograph(FilterUi ui);
+        void onPictureTaken(FilterUi ui, byte[] data);
         boolean onClickMenuColorProcessing(FilterUi ui, String effect);
         boolean onClickMenuImageProcessing(FilterUi ui, String effect);
         Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame, FilterUi ui);

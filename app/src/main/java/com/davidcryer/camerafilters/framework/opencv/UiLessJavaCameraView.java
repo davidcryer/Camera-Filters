@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -18,6 +19,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.Mat;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class UiLessJavaCameraView extends JavaCameraView {
@@ -145,5 +147,39 @@ public class UiLessJavaCameraView extends JavaCameraView {
         if (origCachedBitmap != null) {
             origCachedBitmap.recycle();
         }
+    }
+
+    public void takePicture(final PictureCallback pictureCallback) {
+        final Camera.Parameters pictureParams = mCamera.getParameters();
+        setHighestPictureSize(pictureParams);
+        mCamera.setParameters(pictureParams);//TODO only need to do this once
+        mCamera.setPreviewCallback(null);
+        mCamera.takePicture(null, null, new Camera.PictureCallback() {
+            @Override
+            public void onPictureTaken(byte[] bytes, Camera camera) {
+                mCamera.startPreview();
+                mCamera.setPreviewCallback(UiLessJavaCameraView.this);
+                if (pictureCallback != null) pictureCallback.onPictureTaken(bytes);
+            }
+        });
+    }
+
+    private void setHighestPictureSize(final Camera.Parameters parameters) {
+        int max = 0;
+        int index = 0;
+        final List<Camera.Size> supportedSizes = parameters.getSupportedPictureSizes();
+        for (int i = 0; i < supportedSizes.size(); i++){
+            Camera.Size s = supportedSizes.get(i);
+            int size = s.height * s.width;
+            if (size > max) {
+                index = i;
+                max = size;
+            }
+        }
+        parameters.setPictureSize(supportedSizes.get(index).width, supportedSizes.get(index).height);
+    }
+
+    public interface PictureCallback {
+        void onPictureTaken(byte[] bytes);
     }
 }

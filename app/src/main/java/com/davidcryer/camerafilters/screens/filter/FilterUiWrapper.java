@@ -11,6 +11,7 @@ import com.davidcryer.camerafilters.framework.opencv.ImageManipulator;
 import com.davidcryer.camerafilters.framework.opencv.OpenCvInitialiser;
 import com.davidcryer.camerafilters.framework.uiwrapper.UiModelFactory;
 import com.davidcryer.camerafilters.helpers.PermissionHelper;
+import com.davidcryer.camerafilters.helpers.PictureHelper;
 
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.core.Mat;
@@ -86,6 +87,16 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
             @Override
             public void onClickOnOffToggle(FilterUi ui) {
                 uiModel().toggleRunningState(ui);
+            }
+
+            @Override
+            public void onClickTakePhotograph(FilterUi ui) {
+                ui.takePhotograph();
+            }
+
+            @Override
+            public void onPictureTaken(FilterUi ui, byte[] data) {
+                PictureHelper.save(uiModel().imageManipulator().process(data), PictureHelper.defaultName());
             }
 
             @Override
