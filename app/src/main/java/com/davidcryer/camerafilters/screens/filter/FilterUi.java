@@ -2,6 +2,7 @@ package com.davidcryer.camerafilters.screens.filter;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 
 import com.davidc.uiwrapper.Ui;
 
@@ -15,6 +16,7 @@ public interface FilterUi extends Ui {
     void hideMenu();
     void takePhotograph();
     void showToast(String text);
+    Fragment fragment();
     Activity activity();
 
     interface Listener extends Ui.Listener {

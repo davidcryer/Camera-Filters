@@ -39,8 +39,8 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
         return new FilterUi.Listener() {
             @Override
             public void onStart(FilterUi ui) {
-                getCameraPermission(ui);
-                getExtWritePermission(ui);
+                initOpenCvLibrary(ui);
+                getPermissions(ui);
             }
 
             @Override
@@ -128,27 +128,39 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
         };
     }
 
-    private void getCameraPermission(final FilterUi ui) {
-        if (PermissionHelper.has(Manifest.permission.CAMERA, ui.activity())) {
-            initOpenCvLibrary(ui);
-        } else if (!uiModel().hasAskedForCameraPermission()) {
+    private void getPermissions(final FilterUi ui) {
+        if (shouldRequestCameraPermission(ui)) {
             requestCameraPermission(ui);
-        }
-    }
-
-    private void getExtWritePermission(final FilterUi ui) {
-        if (!hasExtWritePermission(ui) && !uiModel().hasAskedForExtWritePermission()) {
+        } else if (shouldRequestExtWritePermission(ui)) {
             requestExtWritePermission(ui);
         }
     }
 
-    private void requestExtWritePermission(final FilterUi ui) {
-        uiModel().markAskingForExtWritePermission();
-        PermissionHelper.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, PERMISSION_REQUEST_EXT_WRITE, ui.activity());
+    private boolean shouldRequestCameraPermission(final FilterUi ui) {
+        return !hasCameraPermission(ui) && !uiModel().hasAskedForCameraPermission();
+    }
+
+    private boolean hasCameraPermission(final FilterUi ui) {
+        return PermissionHelper.has(Manifest.permission.CAMERA, ui.activity());
+    }
+
+    private boolean shouldRequestExtWritePermission(final FilterUi ui) {
+        return !hasExtWritePermission(ui) && !uiModel().hasAskedForExtWritePermission();
     }
 
     private boolean hasExtWritePermission(final FilterUi ui) {
         return PermissionHelper.has(Manifest.permission.WRITE_EXTERNAL_STORAGE, ui.activity());
+    }
+
+    private void requestExtWritePermission(final FilterUi ui) {
+        uiModel().markAskingForExtWritePermission();
+        PermissionHelper.request(Manifest.permission.WRITE_EXTERNAL_STORAGE, PERMISSION_REQUEST_EXT_WRITE, ui.fragment());
+    }
+
+    private void getExtWritePermissionIfAppropriate(final FilterUi ui) {
+        if (shouldRequestExtWritePermission(ui)) {
+            requestExtWritePermission(ui);
+        }
     }
 
     private void initOpenCvLibrary(final FilterUi ui) {
@@ -164,7 +176,7 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
 
     private void requestCameraPermission(FilterUi ui) {
         uiModel().markAskingForCameraPermission();
-        PermissionHelper.request(Manifest.permission.CAMERA, PERMISSION_REQUEST_CAMERA, ui.activity());
+        PermissionHelper.request(Manifest.permission.CAMERA, PERMISSION_REQUEST_CAMERA, ui.fragment());
     }
 
     private void processReturnedPermissions(final FilterUi ui, final int requestCode, final @NonNull int[] grantResults) {
@@ -173,6 +185,7 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
                 if (PermissionHelper.isGranted(grantResults[0])) {
                     initOpenCvLibrary(ui);
                 }
+                getExtWritePermissionIfAppropriate(ui);
             } break;
         }
     }

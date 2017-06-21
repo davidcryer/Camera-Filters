@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.SurfaceView;
 import android.view.View;
@@ -93,6 +94,11 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
         @Override
         public void showToast(String text) {
             Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public Fragment fragment() {
+            return FilterFragment.this;
         }
 
         @Override
