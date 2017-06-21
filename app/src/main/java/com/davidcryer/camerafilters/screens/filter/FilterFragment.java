@@ -53,11 +53,6 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
 
     private final FilterUi ui = new FilterUi() {
         @Override
-        public void showPermissionNotGrantedDialog() {
-            //TODO
-        }
-
-        @Override
         public void enableSurface() {
             surfaceView.registerForOriginalFrames(origView.getHolder());
             surfaceView.registerForModifiedFrames(modView.getHolder());

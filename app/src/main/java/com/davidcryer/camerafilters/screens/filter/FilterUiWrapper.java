@@ -56,11 +56,6 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
             }
 
             @Override
-            public void onPermissionNotGrantedDialogDismissed(FilterUi ui) {
-                getCameraPermission(ui);
-            }
-
-            @Override
             public void onCameraViewStarted(int width, int height, FilterUi ui) {
                 uiModel().imageManipulator(new ImageManipulator(height, width));
             }
@@ -152,8 +147,6 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
             case PERMISSION_REQUEST_CAMERA: {
                 if (PermissionHelper.isGranted(grantResults[0])) {
                     initOpenCvLibrary(ui);
-                } else {
-                    ui.showPermissionNotGrantedDialog();
                 }
             } break;
         }
