@@ -46,33 +46,25 @@ public class ImageManipulator {
     }
 
     private void processColors(final CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        processColors(inputFrame.rgba(), inputFrame.gray());
-    }
-
-    private void processColors(final Mat rgba, final Mat grey) {
         switch (colorProcessing) {
             default:
             case RGBA: {
-                dest = rgba;
+                dest = inputFrame.rgba();
             } break;
             case BRGA: {
-                Imgproc.cvtColor(rgba, dest, Imgproc.COLOR_RGBA2BGRA, 4);
+                Imgproc.cvtColor(inputFrame.rgba(), dest, Imgproc.COLOR_RGBA2BGRA, 4);
             } break;
             case GREY: {
-                Imgproc.cvtColor(grey, dest, Imgproc.COLOR_GRAY2RGBA, 4);//TODO what is the last variable?
+                Imgproc.cvtColor(inputFrame.gray(), dest, Imgproc.COLOR_GRAY2RGBA, 4);//TODO what is the last variable?
             } break;
             case CANNY: {
-                Imgproc.Canny(grey, intermediate, 80, 75);//TODO what are these integers?
+                Imgproc.Canny(inputFrame.gray(), intermediate, 80, 75);//TODO what are these integers?
                 Imgproc.cvtColor(intermediate, dest, Imgproc.COLOR_GRAY2RGBA, 4);//TODO what is the last variable?
             } break;
         }
     }
 
     private void processImage() {
-        processImage(dest, intermediate);
-    }
-
-    private void processImage(final Mat dest, final Mat intermediate) {
         switch (imageProcessing) {
             case ZOOM: {
                 final int r = dest.rows();
@@ -97,21 +89,6 @@ public class ImageManipulator {
             } break;
         }
     }
-
-    public byte[] process(final byte[] photo) {
-        final Mat pic = Imgcodecs.imdecode(new MatOfByte(photo), Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
-        final Mat grey = pic.clone();
-        Imgproc.cvtColor(pic, grey, Imgproc.COLOR_RGB2GRAY);//TODO check type - may need BGR2GRAY
-        processColors(pic, grey);
-        grey.release();
-        final Mat inter = pic.clone();
-        processImage(pic, inter);
-        inter.release();
-        final byte[] bytes = new byte[photo.length];
-        pic.get(0, 0, bytes);
-        return bytes;
-    }
-
 
     public void release() {
         intermediate.release();

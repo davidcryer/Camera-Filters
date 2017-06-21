@@ -96,7 +96,7 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
 
             @Override
             public void onPictureTaken(FilterUi ui, byte[] data) {
-                PictureHelper.save(uiModel().imageManipulator().process(data), PictureHelper.defaultName());
+                PictureHelper.save(data, PictureHelper.defaultName());
             }
 
             @Override
