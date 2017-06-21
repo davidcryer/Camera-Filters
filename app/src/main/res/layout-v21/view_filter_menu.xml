@@ -68,11 +68,13 @@
     <ImageView
         android:id="@+id/take_photo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:layout_gravity="center_vertical"
+        android:background="@drawable/selector_mask_white"
         android:visibility="gone"
+        android:scaleType="center"
         android:src="@drawable/ic_photo_camera_white_24dp" />
 
     <Button
