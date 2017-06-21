@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CameraFilters</string>
 
-    <string name="filter.hint.menu">Click here to open the menu</string>
+    <string name="filter.hint.menu">Click to toggle menu</string>
     <string name="filter.menu.effects">Effects</string>
     <string name="filter.menu.effects.color">Color: </string>
     <string name="filter.menu.effects.image">Image: </string>

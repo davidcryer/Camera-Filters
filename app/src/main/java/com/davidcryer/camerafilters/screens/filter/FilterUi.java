@@ -10,6 +10,8 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.core.Mat;
 
 public interface FilterUi extends Ui {
+    void showToggleMenuHint();
+    void hideToggleMenuHint(final boolean animate);
     void enableSurface();
     void disableSurface();
     void showMenu();

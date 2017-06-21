@@ -14,6 +14,7 @@ public class FilterUiModel implements UiModel<FilterUi> {
     private ImageEffect imageEffect = ImageEffect.NONE;
     private boolean isMenuOpen = false;
     private boolean isRunning = false;
+    private boolean showToggleMenuHint = true;
     private boolean hasAskedForCameraPermission = false;
     private boolean hasAskedForExtWritePermission = false;
 
@@ -51,12 +52,20 @@ public class FilterUiModel implements UiModel<FilterUi> {
 
     @Override
     public void onto(@NonNull FilterUi ui) {
-
+        if (showToggleMenuHint) {
+            ui.showToggleMenuHint();
+        } else {
+            ui.hideToggleMenuHint(false);
+        }
     }
 
     void openMenu(FilterUi ui) {
         if (ui != null) {
             ui.showMenu();
+            if (showToggleMenuHint) {
+                ui.hideToggleMenuHint(true);
+                showToggleMenuHint = false;
+            }
         }
         isMenuOpen = true;
     }

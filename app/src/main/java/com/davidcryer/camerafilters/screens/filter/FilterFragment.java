@@ -41,6 +41,8 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     SurfaceView origView;
     @BindView(R.id.mod)
     SurfaceView modView;
+    @BindView(R.id.menu_toggle_hint)
+    View menuToggleHintView;
     View root;
 
     @Override
@@ -54,6 +56,20 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     }
 
     private final FilterUi ui = new FilterUi() {
+        @Override
+        public void showToggleMenuHint() {
+            AnimationHelper.fade(menuToggleHintView, menuToggleHintView.getAlpha(), 1f, 200, null);
+        }
+
+        @Override
+        public void hideToggleMenuHint(boolean animate) {
+            if (animate) {
+                AnimationHelper.fade(menuToggleHintView, menuToggleHintView.getAlpha(), 0f, 200, null);
+            } else {
+                menuToggleHintView.setAlpha(0f);
+            }
+        }
+
         @Override
         public void enableSurface() {
             surfaceView.registerForOriginalFrames(origView.getHolder());
