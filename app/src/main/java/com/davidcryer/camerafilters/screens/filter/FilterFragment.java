@@ -12,6 +12,7 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Toast;
 
 import com.davidc.uiwrapper.UiFragment;
 import com.davidcryer.camerafilters.R;
@@ -87,6 +88,11 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
                     if (hasListener()) listener().onPictureTaken(ui, bytes);
                 }
             });
+        }
+
+        @Override
+        public void showToast(String text) {
+            Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -187,17 +193,28 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if (hasListener()) listener().onStart(ui);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (hasListener()) listener().onStop(ui);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         ((OnBackPressedNotifier) getActivity()).register(onBackPressedListener);
-        if (hasListener()) listener().onResume(ui);
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
         ((OnBackPressedNotifier) getActivity()).unRegister(onBackPressedListener);
-        if (hasListener()) listener().onPause(ui);
     }
 
     @Override

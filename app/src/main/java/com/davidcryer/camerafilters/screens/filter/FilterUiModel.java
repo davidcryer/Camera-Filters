@@ -11,17 +11,19 @@ import com.davidcryer.camerafilters.framework.opencv.ImageManipulator;
 public class FilterUiModel implements UiModel<FilterUi> {
     private ImageManipulator imageManipulator;
     private ColorEffect colorEffect = ColorEffect.RGBA;
-    private ImageEffect imageEffect= ImageEffect.NONE;
+    private ImageEffect imageEffect = ImageEffect.NONE;
     private boolean isMenuOpen = false;
     private boolean isRunning = false;
+    private boolean hasAskedForCameraPermission = false;
+    private boolean hasAskedForExtWritePermission = false;
 
     public FilterUiModel() {
 
     }
 
     private FilterUiModel(final Parcel source) {
-        colorEffect = (ColorEffect) source.readSerializable();
-        imageEffect = (ImageEffect) source.readSerializable();
+        hasAskedForCameraPermission = source.readByte() != 0;
+        hasAskedForExtWritePermission = source.readByte() != 0;
     }
 
     @Override
@@ -31,8 +33,8 @@ public class FilterUiModel implements UiModel<FilterUi> {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeSerializable(colorEffect);
-        dest.writeSerializable(imageEffect);
+        dest.writeByte((byte) (hasAskedForCameraPermission ? 1 : 0));
+        dest.writeByte((byte) (hasAskedForExtWritePermission ? 1 : 0));
     }
 
     public final static Creator<FilterUiModel> CREATOR = new Creator<FilterUiModel>() {
@@ -49,8 +51,7 @@ public class FilterUiModel implements UiModel<FilterUi> {
 
     @Override
     public void onto(@NonNull FilterUi ui) {
-        isMenuOpen = false;
-        isRunning = false;
+
     }
 
     void openMenu(FilterUi ui) {
@@ -113,5 +114,21 @@ public class FilterUiModel implements UiModel<FilterUi> {
         if (imageManipulator != null) {
             imageManipulator.release();
         }
+    }
+
+    void markAskingForCameraPermission() {
+        hasAskedForCameraPermission = true;
+    }
+
+    boolean hasAskedForCameraPermission() {
+        return hasAskedForCameraPermission;
+    }
+
+    void markAskingForExtWritePermission() {
+        hasAskedForExtWritePermission = true;
+    }
+
+    boolean hasAskedForExtWritePermission() {
+        return hasAskedForExtWritePermission;
     }
 }

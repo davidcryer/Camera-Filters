@@ -14,11 +14,12 @@ public interface FilterUi extends Ui {
     void showMenu();
     void hideMenu();
     void takePhotograph();
+    void showToast(String text);
     Activity activity();
 
     interface Listener extends Ui.Listener {
-        void onResume(FilterUi ui);
-        void onPause(FilterUi ui);
+        void onStart(FilterUi ui);
+        void onStop(FilterUi ui);
         void onDestroy(FilterUi ui);
         void onPermissionsReturned(FilterUi ui, int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults);
         void onCameraViewStarted(int width, int height, FilterUi ui);

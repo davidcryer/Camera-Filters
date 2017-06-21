@@ -2,12 +2,12 @@
     <string name="app_name">CameraFilters</string>
 
     <string name="filter.hint.menu">Click here to open the menu</string>
-
     <string name="filter.menu.effects">Effects</string>
     <string name="filter.menu.effects.color">Color: </string>
     <string name="filter.menu.effects.image">Image: </string>
     <string name="filter.menu.start">Start</string>
     <string name="filter.menu.stop">Stop</string>
+    <string name="filter.photo.saved">%1$s saved!</string>
 
     <string-array name="filter_menu_effects_color_array">
         <item>RGBA</item>
