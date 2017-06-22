@@ -21,6 +21,6 @@ The app builds on my own UiWrapper library to provide it's architecture, which i
 
 To run this app on a device, you must install the appropriate the OpenCV Manager apk for the device's architecture, which are supplied with the OpenCV Android SDK. This can be downloaded here:
 
-[https://sourceforge.net/projects/opencvlibrary/files/opencv-android/3.2.0/]
+  https://sourceforge.net/projects/opencvlibrary/files/opencv-android/3.2.0/
 
 I hope you enjoy this application and don't find toggling the menu open/closed too annoying. P.S. you can close the menu by using the back button instead of tapping the screen again.
