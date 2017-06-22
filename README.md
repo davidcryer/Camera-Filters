@@ -15,7 +15,7 @@ Image manipulation has been achieved by using OpenCV Android SDK, with the help 
 
 # Architectural style
 
-The app builds on my own UiWrapper library to provide it's architecture, which is designed to aid in a more easily testable solution. Although I haven't written any tests, I believe the modular design allows for easier digestion of the source code once one becomes familiar with the architecture.
+The app builds on my own UiWrapper library to provide it's architecture, which is designed to aid in a more easily testable solution. Although I haven't written any tests, I believe the modular design allows for easier digestion of the source code once one becomes familiar with the architecture. That being said, there are aspects of the app that could do with refactoring slightly, which tests would reveal whilst providing support for further refactoring.
 
 # Final notes
 
