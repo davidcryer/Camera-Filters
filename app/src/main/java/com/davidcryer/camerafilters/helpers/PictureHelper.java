@@ -1,5 +1,6 @@
 package com.davidcryer.camerafilters.helpers;
 
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
 
@@ -22,6 +23,17 @@ public class PictureHelper {
         try {
             final FileOutputStream fos = new FileOutputStream(fileName);
             fos.write(data);
+            fos.close();
+        } catch (IOException e) {
+            Log.e("PictureDemo", "Exception in photoCallback", e);
+        }
+    }
+
+    public static void saveAndRecycle(final Bitmap bitmap, final String fileName) {
+        try {
+            final FileOutputStream fos = new FileOutputStream(fileName);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            bitmap.recycle();
             fos.close();
         } catch (IOException e) {
             Log.e("PictureDemo", "Exception in photoCallback", e);

@@ -32,7 +32,7 @@ public interface FilterUi extends Ui {
         void onClickMenuToggle(FilterUi ui);
         void onClickOnOffToggle(FilterUi ui);
         void onClickTakePhotograph(FilterUi ui);
-        void onPictureTaken(FilterUi ui, byte[] data);
+        void onPictureTaken(FilterUi ui, byte[] data, int height, int width);
         boolean onClickMenuColorProcessing(FilterUi ui, String effect);
         boolean onClickMenuImageProcessing(FilterUi ui, String effect);
         Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame, FilterUi ui);

@@ -99,11 +99,19 @@ public class FilterUiModel implements UiModel<FilterUi> {
         colorEffect = effect;
     }
 
+    ColorEffect colorEffect() {
+        return colorEffect;
+    }
+
     void imageEffect(final ImageEffect effect) {
         if (imageManipulator != null) {
             imageManipulator.imageProcessing(effect);
         }
         imageEffect = effect;
+    }
+
+    ImageEffect imageEffect() {
+        return imageEffect;
     }
 
     ImageManipulator imageManipulator() {

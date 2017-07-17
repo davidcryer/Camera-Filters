@@ -35,6 +35,8 @@ public class UiLessJavaCameraView extends JavaCameraView {
     private final Set<SurfaceHolder> origHolders = new HashSet<>();
     private final Set<SurfaceHolder> modHolders = new HashSet<>();
     private Bitmap origCachedBitmap;
+    private int photoWidth;
+    private int photoHeight;
 
     public UiLessJavaCameraView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -159,7 +161,7 @@ public class UiLessJavaCameraView extends JavaCameraView {
             public void onPictureTaken(byte[] bytes, Camera camera) {
                 mCamera.startPreview();
                 mCamera.setPreviewCallback(UiLessJavaCameraView.this);
-                if (pictureCallback != null) pictureCallback.onPictureTaken(bytes);
+                if (pictureCallback != null) pictureCallback.onPictureTaken(bytes, photoHeight, photoWidth);
             }
         });
     }
@@ -174,12 +176,14 @@ public class UiLessJavaCameraView extends JavaCameraView {
             if (size > max) {
                 index = i;
                 max = size;
+                photoHeight = s.height;
+                photoWidth = s.width;
             }
         }
         parameters.setPictureSize(supportedSizes.get(index).width, supportedSizes.get(index).height);
     }
 
     public interface PictureCallback {
-        void onPictureTaken(byte[] bytes);
+        void onPictureTaken(byte[] bytes, int height, int width);
     }
 }

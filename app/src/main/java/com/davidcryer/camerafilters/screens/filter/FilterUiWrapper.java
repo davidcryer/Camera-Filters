@@ -97,10 +97,14 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
             }
 
             @Override
-            public void onPictureTaken(FilterUi ui, byte[] data) {
+            public void onPictureTaken(FilterUi ui, byte[] data, int height, int width) {
                 final String fileName = PictureHelper.defaultName();
-                PictureHelper.save(data, fileName);
+                final ImageManipulator imageManipulator = new ImageManipulator(height, width);
+                imageManipulator.imageProcessing(uiModel().imageEffect());
+                imageManipulator.colorProcessing(uiModel().colorEffect());
+                PictureHelper.saveAndRecycle(imageManipulator.process(data, height, width), fileName);
                 ui.showToast(String.format(ui.activity().getString(R.string.filter_photo_saved), fileName));
+                imageManipulator.release();
             }
 
             @Override
