@@ -3,6 +3,7 @@ package com.davidcryer.camerafilters.screens.filter;
 import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.davidc.uiwrapper.UiWrapper;
 import com.davidcryer.camerafilters.R;
@@ -29,9 +30,9 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
         return new FilterUiWrapper(UiModelFactory.createFilterUiModel());
     }
 
-    public static FilterUiWrapper savedElseNewInstance(final Bundle savedInstanceState) {
+    public static @Nullable FilterUiWrapper savedState(final Bundle savedInstanceState) {
         final FilterUiModel model = savedUiModel(savedInstanceState);
-        return model == null ? newInstance() : new FilterUiWrapper(model);
+        return model == null ? null : new FilterUiWrapper(model);
     }
 
     @Override
@@ -108,21 +109,19 @@ public class FilterUiWrapper extends UiWrapper<FilterUi, FilterUi.Listener, Filt
             }
 
             @Override
-            public boolean onClickMenuColorProcessing(FilterUi ui, String effect) {
+            public void onClickMenuColorProcessing(FilterUi ui, String effect) {
                 final ColorEffect colorEffect = ColorEffect.effect(effect);
                 if (colorEffect != null) {
                     uiModel().colorEffect(colorEffect);
                 }
-                return true;
             }
 
             @Override
-            public boolean onClickMenuImageProcessing(FilterUi ui, String effect) {
+            public void onClickMenuImageProcessing(FilterUi ui, String effect) {
                 final ImageEffect imageEffect = ImageEffect.effect(effect);
                 if (imageEffect != null) {
                     uiModel().imageEffect(imageEffect);
                 }
-                return true;
             }
 
             @Override

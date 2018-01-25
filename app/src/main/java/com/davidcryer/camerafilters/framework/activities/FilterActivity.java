@@ -2,21 +2,16 @@ package com.davidcryer.camerafilters.framework.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.view.WindowManager;
 
-import com.davidc.uiwrapper.SingleContentContainerWithAppBarActivity;
 import com.davidcryer.camerafilters.screens.filter.FilterFragment;
+import com.davidcryer.simpleactivities.SimpleAppBarActivity;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
 
-public class FilterActivity extends SingleContentContainerWithAppBarActivity implements OnBackPressedNotifier {
+public class FilterActivity extends SimpleAppBarActivity implements OnBackPressedNotifier {
+    private final static String FRAGMENT_FILTER = "filter";
     private final LinkedList<Listener> onBackPressedListeners = new LinkedList<>();
 
     @Override
@@ -30,10 +25,9 @@ public class FilterActivity extends SingleContentContainerWithAppBarActivity imp
         actionBar.hide();
     }
 
-    @NonNull
     @Override
-    protected Fragment initialFragment() {
-        return new FilterFragment();
+    protected void addInitialFragment() {
+        add(FRAGMENT_FILTER, FilterFragment::new);
     }
 
     @Override

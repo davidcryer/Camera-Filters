@@ -1,17 +1,21 @@
 package com.davidcryer.camerafilters.framework.application;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
 
-import com.davidc.uiwrapper.BaseUiWrapperRepository;
-import com.davidc.uiwrapper.UiWrapperRepositoryFactory;
-import com.davidcryer.camerafilters.framework.uiwrapper.UiWrapperRepository;
+import com.davidc.uiwrapper.UiWrapperFactoryProvider;
+import com.davidcryer.camerafilters.framework.uiwrapper.UiWrapperFactory;
 
-public class FilterApplication extends Application implements UiWrapperRepositoryFactory {
+public class FilterApplication extends Application implements UiWrapperFactoryProvider<UiWrapperFactory> {
+    private UiWrapperFactory uiWrapperFactory;
 
-    @NonNull
     @Override
-    public BaseUiWrapperRepository create() {
-        return new UiWrapperRepository();
+    public void onCreate() {
+        super.onCreate();
+        uiWrapperFactory = new UiWrapperFactory();
+    }
+
+    @Override
+    public UiWrapperFactory getUiWrapperFactory() {
+        return uiWrapperFactory;
     }
 }

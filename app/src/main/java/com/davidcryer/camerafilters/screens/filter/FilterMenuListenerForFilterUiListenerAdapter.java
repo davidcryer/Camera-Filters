@@ -8,26 +8,24 @@ abstract class FilterMenuListenerForFilterUiListenerAdapter implements FilterMen
     }
 
     @Override
-    public boolean onSelectColorEffect(String effect) {
-        return hasListener() && listener().onClickMenuColorProcessing(ui, effect);
+    public void onSelectColorEffect(String effect) {
+        listener().onClickMenuColorProcessing(ui, effect);
     }
 
     @Override
-    public boolean onSelectImageEffect(String effect) {
-        return hasListener() && listener().onClickMenuImageProcessing(ui, effect);
+    public void onSelectImageEffect(String effect) {
+        listener().onClickMenuImageProcessing(ui, effect);
     }
 
     @Override
     public void onClickOnOffToggle() {
-        if (hasListener()) listener().onClickOnOffToggle(ui);
+        listener().onClickOnOffToggle(ui);
     }
 
     @Override
     public void onClickTakePhoto() {
-        if (hasListener()) listener().onClickTakePhotograph(ui);
+        listener().onClickTakePhotograph(ui);
     }
-
-    abstract boolean hasListener();
 
     abstract FilterUi.Listener listener();
 }

@@ -61,11 +61,10 @@ public class FilterMenu extends LinearLayout {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (listener != null) {
                     final String effect = adapterView.getItemAtPosition(i).toString();
-                    if (listener.onSelectColorEffect(effect)) {
-                        colorSelectedTextWhite(colorSpinner);
-                        selectedColorIndex = i;
-                        return;
-                    }
+                    listener.onSelectColorEffect(effect);
+                    colorSelectedTextWhite(colorSpinner);
+                    selectedColorIndex = i;
+                    return;
                 }
                 colorSpinner.setSelection(selectedColorIndex, false);
             }
@@ -86,11 +85,10 @@ public class FilterMenu extends LinearLayout {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (listener != null) {
                     final String effect = adapterView.getItemAtPosition(i).toString();
-                    if (listener.onSelectImageEffect(effect)) {
-                        colorSelectedTextWhite(imageSpinner);
-                        selectedImageIndex = i;
-                        return;
-                    }
+                    listener.onSelectImageEffect(effect);
+                    colorSelectedTextWhite(imageSpinner);
+                    selectedImageIndex = i;
+                    return;
                 }
                 imageSpinner.setSelection(selectedImageIndex, false);
             }
@@ -193,8 +191,8 @@ public class FilterMenu extends LinearLayout {
     }
 
     interface Listener {
-        boolean onSelectColorEffect(String effect);
-        boolean onSelectImageEffect(String effect);
+        void onSelectColorEffect(String effect);
+        void onSelectImageEffect(String effect);
         void onClickOnOffToggle();
         void onClickTakePhoto();
     }

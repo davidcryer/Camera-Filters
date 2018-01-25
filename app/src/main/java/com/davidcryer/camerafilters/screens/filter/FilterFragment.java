@@ -15,11 +15,12 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
-import com.davidc.uiwrapper.UiFragment;
+import com.davidc.uiwrapper.UiWrapper;
+import com.davidc.uiwrapper.UiWrapperFactoryFragment;
 import com.davidcryer.camerafilters.R;
 import com.davidcryer.camerafilters.framework.activities.OnBackPressedNotifier;
 import com.davidcryer.camerafilters.framework.opencv.UiLessJavaCameraView;
-import com.davidcryer.camerafilters.framework.uiwrapper.UiWrapperRepository;
+import com.davidcryer.camerafilters.framework.uiwrapper.UiWrapperFactory;
 import com.davidcryer.camerafilters.helpers.AnimationHelper;
 import com.davidcryer.camerafilters.helpers.ViewTreeObserverHelper;
 
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Listener> {
+public class FilterFragment extends UiWrapperFactoryFragment<FilterUi, FilterUi.Listener, UiWrapperFactory> {
     private Unbinder unbinder;
     @BindView(R.id.surface)
     UiLessJavaCameraView surfaceView;
@@ -44,16 +45,6 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     @BindView(R.id.menu_toggle_hint)
     View menuToggleHintView;
     View root;
-
-    @Override
-    protected FilterUi.Listener bind(@NonNull UiWrapperRepository uiWrapperRepository, @NonNull String instanceId, @Nullable Bundle savedInstanceState) {
-        return uiWrapperRepository.bind(ui, instanceId, savedInstanceState);
-    }
-
-    @Override
-    protected void unbind(@NonNull UiWrapperRepository uiWrapperRepository, @NonNull String instanceId, @Nullable Bundle outState, boolean isConfigurationChange) {
-        uiWrapperRepository.unbind(ui, instanceId, outState, isConfigurationChange);
-    }
 
     private final FilterUi ui = new FilterUi() {
         @Override
@@ -102,7 +93,7 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
             surfaceView.takePicture(new UiLessJavaCameraView.PictureCallback() {
                 @Override
                 public void onPictureTaken(byte[] bytes, int height, int width) {
-                    if (hasListener()) listener().onPictureTaken(ui, bytes, height, width);
+                    listener().onPictureTaken(ui, bytes, height, width);
                 }
             });
         }
@@ -178,11 +169,6 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     private void setUpFilterMenu() {
         menuView.listener(new FilterMenuListenerForFilterUiListenerAdapter(ui) {
             @Override
-            boolean hasListener() {
-                return FilterFragment.this.hasListener();
-            }
-
-            @Override
             FilterUi.Listener listener() {
                 return FilterFragment.this.listener();
             }
@@ -193,17 +179,17 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
         surfaceView.setCvCameraViewListener(new CameraBridgeViewBase.CvCameraViewListener2() {
             @Override
             public void onCameraViewStarted(int width, int height) {
-                if (hasListener()) listener().onCameraViewStarted(width, height, ui);
+                listener().onCameraViewStarted(width, height, ui);
             }
 
             @Override
             public void onCameraViewStopped() {
-                if (hasListener()) listener().onCameraViewStopped(ui);
+                listener().onCameraViewStopped(ui);
             }
 
             @Override
             public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-                return hasListener() ? listener().onCameraFrame(inputFrame, ui) : null;
+                return listener().onCameraFrame(inputFrame, ui);
             }
         });
     }
@@ -217,13 +203,13 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
     @Override
     public void onStart() {
         super.onStart();
-        if (hasListener()) listener().onStart(ui);
+        listener().onStart(ui);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (hasListener()) listener().onStop(ui);
+        listener().onStop(ui);
     }
 
     @Override
@@ -241,26 +227,36 @@ public class FilterFragment extends UiFragment<UiWrapperRepository, FilterUi.Lis
 
     @Override
     public void onDestroy() {
+        listener().onDestroy(ui);
         super.onDestroy();
-        if (hasListener()) listener().onDestroy(ui);
     }
 
     private final OnBackPressedNotifier.Listener onBackPressedListener = new OnBackPressedNotifier.Listener() {
         @Override
         public boolean onBackPressed() {
-            return hasListener() && listener().onBackPressed(ui);
+            return listener().onBackPressed(ui);
         }
     };
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (hasListener()) listener().onPermissionsReturned(ui, requestCode, permissions, grantResults);
+        listener().onPermissionsReturned(ui, requestCode, permissions, grantResults);
     }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.menu_toggle)
     public void onClickMenuToggle() {
-        if (hasListener()) listener().onClickMenuToggle(ui);
+        listener().onClickMenuToggle(ui);
+    }
+
+    @Override
+    protected UiWrapper<FilterUi, FilterUi.Listener, ?> uiWrapper(UiWrapperFactory uiWrapperFactory, @Nullable Bundle savedState) {
+        return uiWrapperFactory.filterUiWrapper(savedState);
+    }
+
+    @Override
+    protected FilterUi ui() {
+        return ui;
     }
 }
